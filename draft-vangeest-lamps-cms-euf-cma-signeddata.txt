@@ -84,10 +84,9 @@ Table of Contents
      3.3.  Attribute-Specified Use of Explicit Signature Context
            Strings
    4.  Straw Mitigations
-     4.1.  Always use SignedAttributes in CMS
-     4.2.  Attack Detection in CMS
-     4.3.  Always/Never use SignedAttributes in Your Protocol
-     4.4.  Attack Detection in Your Protocol
+     4.1.  Attack Detection in CMS
+     4.2.  Always/Never use SignedAttributes in Your Protocol
+     4.3.  Attack Detection in Your Protocol
    5.  Security Considerations
    6.  IANA Considerations
    7.  References
@@ -192,7 +191,8 @@ Table of Contents
       Sign(sk, M, "no-signed-attributes")
       Verify(sk, M, "no-signed-attributes")
 
-   Ed448 is out of luck.
+   Unlike the following mitigations, Ed448 cannot be addressed by this
+   mitigation because it is already published and in use.
 
 3.2.  Attribute-Specified Use of Implicit Signature Context Strings
 
@@ -318,12 +318,7 @@ Table of Contents
    The following mitigations might not be good ideas but are included
    just in case there's a seed of genius in them.
 
-4.1.  Always use SignedAttributes in CMS
-
-   Write a candidate for shortest RFC entitled and containing the text
-   "You MUST always use SignedAttributes in CMS."
-
-4.2.  Attack Detection in CMS
+4.1.  Attack Detection in CMS
 
    If SignedAttributes is not present, check if the signed message is a
    valid DER-encoded SignedAttributes structure and fail if it is.  The
@@ -340,14 +335,14 @@ Table of Contents
    encodings, with attacker-controlled bytes where the message digest
    attribute would be.
 
-4.3.  Always/Never use SignedAttributes in Your Protocol
+4.2.  Always/Never use SignedAttributes in Your Protocol
 
    Individually update each protocol which use CMS to always require or
    forbid signed attributes.
 
-4.4.  Attack Detection in Your Protocol
+4.3.  Attack Detection in Your Protocol
 
-   Section 4.2 but specified in the protocol that uses CMS rather than
+   Section 4.1 but specified in the protocol that uses CMS rather than
    CMS itself.
 
 5.  Security Considerations
