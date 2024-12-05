@@ -75,13 +75,17 @@ CMS gives a signer two options when generating a signature on some content:
 - Compute a hash over the content, place this hash in the message-digest attribute in the SignedAttributes type, and generate a signature on the SignedAttributes.
 
 The resulting signature does not commit to the presence of the SignedAttributes type, allowing an attacker to influence verification behaviour.
-An attacker can take a CMS signed message M which was originally signed with SignedAttributes present and remove the SignedAttributes, thereby crafting a new message M' that was never signed by the signer.
-M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.
+An attacker can perform two different types of attacks:
+
+1. Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and remove the SignedAttributes, thereby crafting a new message M' that was never signed by the signer.  M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.
+2. Let the signer sign a message of the attacker's choice without SignedAttributes.
+   The attacker chooses this message to be a valid DER-encoding of a SignedAttributes object.
+   He can then add this encoded SignedAttributes object to the signed message and change the signed message to the one that was used to create the messageDigest attribute within the SignedAttributes.
+   The signature created by the signer is valid for this arbitrary attacker-chosen message.
+
 This vulnerability was presented by Falko Strenzke at IETF 121 [LAMPS121] and is detailed in [Str23].
 
-Due to the limited flexibility of the forged message and the limited control the attacker has over it, the fraction of vulnerable systems can be assumed to be small but due to the wide deployment of the affected protocols, such instances cannot be excluded.
-
-TODO: do we need to describe the vulnerability more?
+Due to the limited flexibility of either the signed or the forged message in either attack variant, the fraction of vulnerable systems can be assumed to be small. But due to the wide deployment of the affected protocols, such instances cannot be excluded.
 
 # Conventions and Definitions
 
@@ -89,8 +93,8 @@ TODO: do we need to describe the vulnerability more?
 
 # Potential Mitigations
 
-Potential mitigations are described in the following sub-sections for working group discussion.
-If this draft is adopted we'll describe one in full detail.
+Potential mitigations are described in the following sub-sections as input to the working group discussion.
+If this draft is adopted and the working group has taken a decision which measure(s) should be realized, we'll describe the chosen measures in detail.
 
 The mitigations in this section make use of a context string which is passed to the signature algorithm's sign and verify functions.
 
@@ -188,7 +192,7 @@ A proposed list of initial signature context string keywords follows:
 |-|-|-|
 | "IETF/CMS" | | REQUIRED to be in the sign-with-context-implicit attribute, to differentiate a signature in CMS from a signature with the same private key over some other data. |
 | "signed-attrs" | | Present if signed attributes are used, not present if signed attributes are not used. Alternative: always present, value = 0/1, yes/no depending on whether signed attributes are present or not. |
-| "app-ctx" | base64( SHA-256( protocol_context ) ) | Allows the protocol using CMS to specify a context. SHA-256 is applied so that the length available to the protocol context isn't dependent on the other context values used in CMS. (alternative: no SHA-256 here, apply SHA-256 to the whole CMS context). base64 is applied so the app context doesn't introduce semi-colons to mess up CMS' parsing of this string. |
+| "app-ctx" | base64( SHA-256( protocol_context ) ) | Allows the protocol using CMS to specify a context. SHA-256 is applied so that the length available to the protocol context isn't dependent on the other context values used in CMS. (alternative: no SHA-256 here, apply SHA-256 to the whole CMS context). base64-encoding is applied so the app context doesn't introduce semi-colons to mess up CMS' parsing of this string. |
 {: title="Potential Context String Keywords"}
 
 When a verifier processes a SignerInfo containing the sign-with-context-explicit attribute, it MUST perform the following consistency checks:
@@ -198,7 +202,7 @@ When a verifier processes a SignerInfo containing the sign-with-context-explicit
 
 If the consistency checks pass, the signature is verified using the string in the sign-with-context-explicit attribute as the signature context (alternative: using SHA-256 of the string in the sign-with-context-explicit attribute).
 
-When a verifier processes a SignerInfo without the sign-with-context-explicit attribute, it MUST verify the signature using the default signature context value ("").
+When a verifier processes a SignerInfo without the sign-with-context-explicit attribute, they MUST verify the signature using the default signature context value ("").
 
 {{I-D.ietf-lamps-cms-ml-dsa}}, {{I-D.ietf-lamps-cms-sphincs-plus}}, and {{I-D.ietf-lamps-pq-composite-sigs}} can be published using the default signature context string.  ML-DSA, SLH-DSA, Composite-ML-DSA, and Ed448 only use the non-default context string when the new attribute is used.
 
