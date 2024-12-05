@@ -131,7 +131,7 @@ When signed attributes are absent:
    Verify(sk, M, "no-signed-attributes")
 ~~~
 
-Ed448 is out of luck.
+Unlike the following mitigations, Ed448 cannot be addressed by this mitigation because it is already published and in use.
 
 ## Attribute-Specified Use of Implicit Signature Context Strings {#implicit}
 
@@ -209,10 +209,6 @@ When a verifier processes a SignerInfo without the sign-with-context-explicit at
 # Straw Mitigations
 
 The following mitigations might not be good ideas but are included just in case there's a seed of genius in them.
-
-## Always use SignedAttributes in CMS
-
-Write a candidate for shortest RFC entitled and containing the text "You MUST always use SignedAttributes in CMS."
 
 ## Attack Detection in CMS {#attack-detection}
 
