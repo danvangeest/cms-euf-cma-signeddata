@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-02T01:18:06.966026+00:00",
+  "timestamp": "2025-01-05T01:24:48.878133+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -49,7 +49,56 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 3,
+      "id": "I_kwDONVsH1s6k9lEq",
+      "title": "Clarify introduction bullet 1",
+      "url": "https://github.com/danvangeest/cms-euf-cma-signeddata/issues/3",
+      "state": "OPEN",
+      "author": "danvangeest",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Carl Wallace's comment: https://mailarchive.ietf.org/arch/msg/spasm/hiSdxAHAfj0nmBqZhO8NlQJMDUQ/\r\n\r\nIn the introduction, bullet 1 is incomplete. Simply removing SignedAttributes does nothing of value for an attacker. It should probably say something like: \"Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and rearrange the structure such that the SignedAttributes field is absent and the original DER-encoded SignedAttributes appears as an encapsulated or detached content of type id-data, thereby crafting a new structure M' that was never explicitly signed by the signer.\"",
+      "createdAt": "2025-01-03T13:47:22Z",
+      "updatedAt": "2025-01-03T13:47:22Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 4,
+      "id": "I_kwDONVsH1s6k9o0P",
+      "title": "Caution against using id-data for new protocols",
+      "url": "https://github.com/danvangeest/cms-euf-cma-signeddata/issues/4",
+      "state": "OPEN",
+      "author": "danvangeest",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Carl Wallace's comment: https://mailarchive.ietf.org/arch/msg/spasm/hiSdxAHAfj0nmBqZhO8NlQJMDUQ/\r\n\r\n4.2 might include a note cautioning against use of id-data for new protocols. A draft that prohibits any new use of id-data in protocols may be worthwhile a well.",
+      "createdAt": "2025-01-03T13:58:20Z",
+      "updatedAt": "2025-01-03T13:58:20Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 5,
+      "id": "I_kwDONVsH1s6k9v9s",
+      "title": "Mention id-data in Security Considerations",
+      "url": "https://github.com/danvangeest/cms-euf-cma-signeddata/issues/5",
+      "state": "OPEN",
+      "author": "danvangeest",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "From Carl Wallace's comment: https://mailarchive.ietf.org/arch/msg/spasm/hiSdxAHAfj0nmBqZhO8NlQJMDUQ/\r\n\r\nThe first security consideration may benefit from noting any protocol that does not use id-data requires SignedAttributes and thus provides a defense against this vulnerability. https://www.iana.org/assignments/media-types/application/cms has a partial list of such protocols.",
+      "createdAt": "2025-01-03T14:19:01Z",
+      "updatedAt": "2025-01-03T14:19:01Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
