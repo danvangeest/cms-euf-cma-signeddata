@@ -5,8 +5,8 @@
 Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Intended status: Standards Track                             F. Strenzke
-Expires: 8 June 2025                                              MTG AG
-                                                         5 December 2024
+Expires: 14 July 2025                                             MTG AG
+                                                         10 January 2025
 
 
      EUF-CMA for the Cryptographic Message Syntax (CMS) SignedData
@@ -55,11 +55,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 June 2025.
+   This Internet-Draft will expire on 14 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -87,11 +87,25 @@ Table of Contents
      4.1.  Attack Detection in CMS
      4.2.  Always/Never use SignedAttributes in Your Protocol
      4.3.  Attack Detection in Your Protocol
-   5.  Security Considerations
-   6.  IANA Considerations
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   5.  RFCs Using the id-data eContentType
+     5.1.  RFC 8894 Simple Certificate Enrolment Protocol
+     5.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
+     5.3.  RFC 8551 S/MIME 4.0
+     5.4.  RFC 6257 Bundle Security Protocol Specification
+     5.5.  RFC 5751 S/MIME 3.2
+     5.6.  RFC 5655 IP Flow Information Export (IPFIX)
+     5.7.  RFC 5636 Traceable Anonymous Certificate
+     5.8.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+     5.9.  RFC 5024 ODETTE File Transfer Protocol 2
+     5.10. RFC 3851 S/MIME 3.1
+     5.11. RFC 3126 Electronic Signature Formats for long term
+            electronic signatures
+     5.12. RFC 2633 S/MIME 3.0
+   6.  Security Considerations
+   7.  IANA Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
@@ -345,7 +359,132 @@ Table of Contents
    Section 4.1 but specified in the protocol that uses CMS rather than
    CMS itself.
 
-5.  Security Considerations
+5.  RFCs Using the id-data eContentType
+
+   The RFCs in the following subsections use the id-data eContentType.
+   This table summarizes their usages of signed attributes.
+
+     +===========+==================================================+
+     | RFC       | Signed Attributes Usage                          |
+     +===========+==================================================+
+     | [RFC8994] | Appears to require the used of signed attributes |
+     +-----------+--------------------------------------------------+
+     | [RFC8572] | Says nothing about signed attributes             |
+     +-----------+--------------------------------------------------+
+     | [RFC8551] | RECOMMENDS signed attributes                     |
+     +-----------+--------------------------------------------------+
+     | [RFC6257] | Forbids signed attributes                        |
+     +-----------+--------------------------------------------------+
+     | [RFC5751] | RECOMMENDS signed attributes                     |
+     +-----------+--------------------------------------------------+
+     | [RFC5655] | Says nothing about signed attributes             |
+     +-----------+--------------------------------------------------+
+     | [RFC5636] | Forbids signed attributes                        |
+     +-----------+--------------------------------------------------+
+     | [RFC5126] | Requires signed attributes                       |
+     +-----------+--------------------------------------------------+
+     | [RFC5024] | Says nothing about signed attributes             |
+     +-----------+--------------------------------------------------+
+     | [RFC3851] | RECOMMENDS signed attributes                     |
+     +-----------+--------------------------------------------------+
+     | [RFC3126] | Requires signed attributes                       |
+     +-----------+--------------------------------------------------+
+     | [RFC2633] | RECOMMENDS signed attributes                     |
+     +-----------+--------------------------------------------------+
+
+                       Table 2: RFCs using id-data
+
+   An RFC requiring or forbidding signed attributes does not mean that a
+   verifier will enforce this requirement when verifying, their CMS
+   implementation may simply process the message whether or not signed
+   attributes are present.
+
+5.1.  RFC 8894 Simple Certificate Enrolment Protocol
+
+   Figure 6 in Section 3 of [RFC8894] specifies id-data as the
+   eContentType, and shows the use of signedAttrs.  The document itself
+   never refers to signed attributes, but instead to authenticated
+   attributes and an authenticatedAttributes type.  Errata ID 8247 has
+   been filed to clarify this.
+
+   Since SCEP seems to require the use of signedAttrs with the id-data
+   eContentType, it is not affected by this attack.
+
+5.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
+
+   Section 3.1 of [RFC8572] allows the use of the id-data eContentType,
+   although it also defines more specific content types.  It does not
+   say anything about signed attributes.
+
+5.3.  RFC 8551 S/MIME 4.0
+
+   [RFC8551] requires the use of the id-data eContentType.
+
+   Section 2.5 of [RFC8551] says:
+
+      Receiving agents MUST be able to handle zero or one instance of
+      each of the signed attributes listed here.  Sending agents SHOULD
+      generate one instance of each of the following signed attributes
+      in each S/MIME message:
+
+   and
+
+      Sending agents SHOULD generate one instance of the
+      signingCertificate or signingCertificateV2 signed attribute in
+      each SignerInfo structure.
+
+   So the use of signed attributes is not an absolute requirement.
+
+5.4.  RFC 6257 Bundle Security Protocol Specification
+
+   Section 4 of [RFC6257] says:
+
+      In all cases where we use CMS, implementations SHOULD NOT include
+      additional attributes whether signed or unsigned, authenticated or
+      unauthenticated.
+
+5.5.  RFC 5751 S/MIME 3.2
+
+   [RFC5751] is an older version of [RFC8551] with the same signed
+   attributes requirements.
+
+5.6.  RFC 5655 IP Flow Information Export (IPFIX)
+
+   [RFC5655] is a file format that uses CMS for detached signatures.  It
+   says nothing about the use of signed attributes.
+
+5.7.  RFC 5636 Traceable Anonymous Certificate
+
+   Appendix C.1.2 of [RFC5636] says:
+
+      The signedAttr element MUST be omitted.
+
+5.8.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+
+   Section 4.3.1 of [RFC5126] specifies mandatory signed attributes.
+
+5.9.  RFC 5024 ODETTE File Transfer Protocol 2
+
+   [RFC5024] uses the id-data eContentType and says nothing about signed
+   attributes.
+
+5.10.  RFC 3851 S/MIME 3.1
+
+   [RFC3851] is an older version of [RFC8551] with the same signed
+   attributes requirements.
+
+5.11.  RFC 3126 Electronic Signature Formats for long term electronic
+       signatures
+
+   Section 6.1 of [RFC3126] requires the MessageDigest attribute, which
+   is a signed attribute.
+
+5.12.  RFC 2633 S/MIME 3.0
+
+   [RFC2633] is an older version of [RFC8551] with the same signed
+   attributes requirements.
+
+6.  Security Considerations
 
    TODO Security
 
@@ -371,13 +510,13 @@ Table of Contents
 
    *  Systems with permissive parsers
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document has no IANA actions.
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -392,7 +531,7 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [FIPS204]  "Module-lattice-based digital signature standard",
               National Institute of Standards and Technology (U.S.),
@@ -432,6 +571,49 @@ Table of Contents
               2024, <https://datatracker.ietf.org/meeting/121/materials/
               slides-121-lamps-cms-euf-cma-00>.
 
+   [RFC2633]  Ramsdell, B., Ed., "S/MIME Version 3 Message
+              Specification", RFC 2633, DOI 10.17487/RFC2633, June 1999,
+              <https://www.rfc-editor.org/rfc/rfc2633>.
+
+   [RFC3126]  Pinkas, D., Ross, J., and N. Pope, "Electronic Signature
+              Formats for long term electronic signatures", RFC 3126,
+              DOI 10.17487/RFC3126, September 2001,
+              <https://www.rfc-editor.org/rfc/rfc3126>.
+
+   [RFC3851]  Ramsdell, B., Ed., "Secure/Multipurpose Internet Mail
+              Extensions (S/MIME) Version 3.1 Message Specification",
+              RFC 3851, DOI 10.17487/RFC3851, July 2004,
+              <https://www.rfc-editor.org/rfc/rfc3851>.
+
+   [RFC5024]  Friend, I., "ODETTE File Transfer Protocol 2.0", RFC 5024,
+              DOI 10.17487/RFC5024, November 2007,
+              <https://www.rfc-editor.org/rfc/rfc5024>.
+
+   [RFC5126]  Pinkas, D., Pope, N., and J. Ross, "CMS Advanced
+              Electronic Signatures (CAdES)", RFC 5126,
+              DOI 10.17487/RFC5126, March 2008,
+              <https://www.rfc-editor.org/rfc/rfc5126>.
+
+   [RFC5636]  Park, S., Park, H., Won, Y., Lee, J., and S. Kent,
+              "Traceable Anonymous Certificate", RFC 5636,
+              DOI 10.17487/RFC5636, August 2009,
+              <https://www.rfc-editor.org/rfc/rfc5636>.
+
+   [RFC5655]  Trammell, B., Boschi, E., Mark, L., Zseby, T., and A.
+              Wagner, "Specification of the IP Flow Information Export
+              (IPFIX) File Format", RFC 5655, DOI 10.17487/RFC5655,
+              October 2009, <https://www.rfc-editor.org/rfc/rfc5655>.
+
+   [RFC5751]  Ramsdell, B. and S. Turner, "Secure/Multipurpose Internet
+              Mail Extensions (S/MIME) Version 3.2 Message
+              Specification", RFC 5751, DOI 10.17487/RFC5751, January
+              2010, <https://www.rfc-editor.org/rfc/rfc5751>.
+
+   [RFC6257]  Symington, S., Farrell, S., Weiss, H., and P. Lovell,
+              "Bundle Security Protocol Specification", RFC 6257,
+              DOI 10.17487/RFC6257, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6257>.
+
    [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
               Signature Algorithm (EdDSA)", RFC 8032,
               DOI 10.17487/RFC8032, January 2017,
@@ -441,6 +623,25 @@ Table of Contents
               Algorithm (EdDSA) Signatures in the Cryptographic Message
               Syntax (CMS)", RFC 8419, DOI 10.17487/RFC8419, August
               2018, <https://www.rfc-editor.org/rfc/rfc8419>.
+
+   [RFC8551]  Schaad, J., Ramsdell, B., and S. Turner, "Secure/
+              Multipurpose Internet Mail Extensions (S/MIME) Version 4.0
+              Message Specification", RFC 8551, DOI 10.17487/RFC8551,
+              April 2019, <https://www.rfc-editor.org/rfc/rfc8551>.
+
+   [RFC8572]  Watsen, K., Farrer, I., and M. Abrahamsson, "Secure Zero
+              Touch Provisioning (SZTP)", RFC 8572,
+              DOI 10.17487/RFC8572, April 2019,
+              <https://www.rfc-editor.org/rfc/rfc8572>.
+
+   [RFC8894]  Gutmann, P., "Simple Certificate Enrolment Protocol",
+              RFC 8894, DOI 10.17487/RFC8894, September 2020,
+              <https://www.rfc-editor.org/rfc/rfc8894>.
+
+   [RFC8994]  Eckert, T., Ed., Behringer, M., Ed., and S. Bjarnason, "An
+              Autonomic Control Plane (ACP)", RFC 8994,
+              DOI 10.17487/RFC8994, May 2021,
+              <https://www.rfc-editor.org/rfc/rfc8994>.
 
    [Str23]    Strenzke, F., "ForgedAttributes: An Existential Forgery
               Vulnerability of CMS and PKCS#7 Signatures", 22 November
