@@ -227,6 +227,99 @@ Individually update each protocol which use CMS to always require or forbid sign
 
 {{attack-detection}} but specified in the protocol that uses CMS rather than CMS itself.
 
+# RFCs Using the id-data eContentType
+
+The RFCs in the following subsections use the id-data eContentType. This table summarizes their usages of signed attributes.
+
+| RFC | Signed Attributes Usage |
+|-|-|
+| {{?RFC8994}} | Appears to require the used of signed attributes |
+| {{?RFC8572}} | Says nothing about signed attributes |
+| {{?RFC8551}} | RECOMMENDS signed attributes |
+| {{?RFC6257}} | Forbids signed attributes |
+| {{?RFC5751}} | RECOMMENDS signed attributes |
+| {{?RFC5655}} | Says nothing about signed attributes |
+| {{?RFC5636}} | Forbids signed attributes |
+| {{?RFC5126}} | Requires signed attributes |
+| {{?RFC5024}} | Says nothing about signed attributes |
+| {{?RFC3851}} | RECOMMENDS signed attributes |
+| {{?RFC3126}} | Requires signed attributes |
+| {{?RFC2633}} | RECOMMENDS signed attributes |
+{: title="RFCs using id-data"}
+
+An RFC requiring or forbidding signed attributes does not mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.
+
+## RFC 8894 Simple Certificate Enrolment Protocol
+
+Figure 6 in {{Section 3 of ?RFC8894}} specifies id-data as the eContentType, and shows the use of signedAttrs.  The document itself never refers to signed attributes, but instead to authenticated attributes and an authenticatedAttributes type.  Errata ID 8247 has been filed to clarify this.
+
+Since SCEP seems to require the use of signedAttrs with the id-data eContentType, it is not affected by this attack.
+
+## RFC 8572 Secure Zero Touch Provisioning (SZTP)
+
+{{Section 3.1 of ?RFC8572}} allows the use of the id-data eContentType, although it also defines more specific content types.  It does not say anything about signed attributes.
+
+## RFC 8551 S/MIME 4.0
+
+{{?RFC8551}} requires the use of the id-data eContentType.
+
+{{Section 2.5 of ?RFC8551}} says:
+
+> Receiving agents MUST be able to handle zero or one instance of each
+of the signed attributes listed here.  Sending agents SHOULD generate
+one instance of each of the following signed attributes in each
+S/MIME message:
+
+and
+
+> Sending agents SHOULD generate one instance of the signingCertificate
+or signingCertificateV2 signed attribute in each SignerInfo
+structure.
+
+So the use of signed attributes is not an absolute requirement.
+
+## RFC 6257 Bundle Security Protocol Specification
+
+{{Section 4 of ?RFC6257}} says:
+
+> In all cases where we use CMS, implementations SHOULD NOT include
+additional attributes whether signed or unsigned, authenticated or
+unauthenticated.
+
+## RFC 5751 S/MIME 3.2
+
+{{?RFC5751}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
+
+## RFC 5655 IP Flow Information Export (IPFIX)
+
+{{?RFC5655}} is a file format that uses CMS for detached signatures. It says nothing about the use of signed attributes.
+
+## RFC 5636 Traceable Anonymous Certificate
+
+{{Section C.1.2 of ?RFC5636}} says:
+
+> The signedAttr element MUST be omitted.
+
+## RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+
+{{Section 4.3.1 of ?RFC5126}} specifies mandatory signed attributes.
+
+## RFC 5024 ODETTE File Transfer Protocol 2
+
+{{?RFC5024}} uses the id-data eContentType and says nothing about signed attributes.
+
+## RFC 3851 S/MIME 3.1
+
+{{?RFC3851}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
+
+## RFC 3126 Electronic Signature Formats for long term electronic signatures
+
+{{Section 6.1 of ?RFC3126}} requires the MessageDigest attribute, which is a signed attribute.
+
+## RFC 2633 S/MIME 3.0
+
+{{?RFC2633}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
+
 
 # Security Considerations
 
