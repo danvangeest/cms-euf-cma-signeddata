@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-12T01:26:08.460959+00:00",
+  "timestamp": "2025-01-14T01:15:41.382799+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -196,7 +196,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-10T15:22:11Z",
-      "updatedAt": "2025-01-10T15:22:11Z",
+      "updatedAt": "2025-01-13T07:48:59Z",
       "baseRepository": "danvangeest/cms-euf-cma-signeddata",
       "baseRefName": "main",
       "baseRefOid": "30e36657edaf7d74aff595077eeebe8a2da8b0de",
@@ -207,8 +207,50 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "comments": [
+        {
+          "author": "falko-strenzke",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good to me, thanks for making this addition.",
+          "createdAt": "2025-01-13T07:48:58Z",
+          "updatedAt": "2025-01-13T07:48:58Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDONVsH1s6XvUAt",
+          "commit": {
+            "abbreviatedOid": "8e0bec0"
+          },
+          "author": "falko-strenzke",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-13T06:11:00Z",
+          "updatedAt": "2025-01-13T06:11:00Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "I would put all S/MIME versions under one heading.",
+              "createdAt": "2025-01-13T06:11:00Z",
+              "updatedAt": "2025-01-13T06:11:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONVsH1s6Xv2c_",
+          "commit": {
+            "abbreviatedOid": "8e0bec0"
+          },
+          "author": "falko-strenzke",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-01-13T07:37:17Z",
+          "updatedAt": "2025-01-13T07:37:17Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
