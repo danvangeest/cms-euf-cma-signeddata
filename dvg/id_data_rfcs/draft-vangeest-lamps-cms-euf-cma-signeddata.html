@@ -1515,7 +1515,7 @@ The mandatory contentType and messageDigest attributes, with their respective OI
             <td class="text-left" rowspan="1" colspan="1">
               <span>[<a href="#RFC8994" class="cite xref">RFC8994</a>]</span>
 </td>
-            <td class="text-left" rowspan="1" colspan="1">Appears to require the used of signed attributes</td>
+            <td class="text-left" rowspan="1" colspan="1">Requires the used of signed attributes</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
@@ -1585,14 +1585,14 @@ The mandatory contentType and messageDigest attributes, with their respective OI
           </tr>
         </tbody>
       </table>
-<p id="section-5-3">An RFC requiring or forbidding signed attributes does not mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.<a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-3">An RFC requiring or forbidding signed attributes does not necessarily mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.  If one of the signed attributes is necessary for the verifier to successfully verify the signature or to successfully process the CMS data then the attack will not apply.<a href="#section-5-3" class="pilcrow">¶</a></p>
 <div id="rfc-8894-simple-certificate-enrolment-protocol">
 <section id="section-5.1">
         <h3 id="name-rfc-8894-simple-certificate">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-rfc-8894-simple-certificate" class="section-name selfRef">RFC 8894 Simple Certificate Enrolment Protocol</a>
         </h3>
-<p id="section-5.1-1">Figure 6 in <span><a href="https://rfc-editor.org/rfc/rfc8894#section-3" class="relref">Section 3</a> of [<a href="#RFC8894" class="cite xref">RFC8894</a>]</span> specifies id-data as the eContentType, and shows the use of signedAttrs.  The document itself never refers to signed attributes, but instead to authenticated attributes and an authenticatedAttributes type.  Errata ID 8247 has been filed to clarify this.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">Since SCEP seems to require the use of signedAttrs with the id-data eContentType, it is not affected by this attack.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">Figure 6 in <span><a href="https://rfc-editor.org/rfc/rfc8894#section-3" class="relref">Section 3</a> of [<a href="#RFC8894" class="cite xref">RFC8894</a>]</span> specifies id-data as the eContentType, and shows the use of signedAttrs.  The document itself never refers to signed attributes, but instead to authenticated attributes and an authenticatedAttributes type.  Errata ID 8247 clarifies that it should be "signed attributes" and "signedAttrs".<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">Since SCEP requires the use of signedAttrs with the id-data eContentType, and the recipient must process at least some of the signed attributes, it is not affected by the attack.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rfc-8572-secure-zero-touch-provisioning-sztp">
@@ -1671,6 +1671,7 @@ unauthenticated.<a href="#section-5.4-2.1.1" class="pilcrow">¶</a></p>
 <a href="#section-5.7" class="section-number selfRef">5.7. </a><a href="#name-rfc-5126-cms-advanced-elect" class="section-name selfRef">RFC 5126 CMS Advanced Electronic Signatures (CAdES)</a>
         </h3>
 <p id="section-5.7-1"><span><a href="https://rfc-editor.org/rfc/rfc5126#section-4.3.1" class="relref">Section 4.3.1</a> of [<a href="#RFC5126" class="cite xref">RFC5126</a>]</span> specifies mandatory signed attributes.<a href="#section-5.7-1" class="pilcrow">¶</a></p>
+<p id="section-5.7-2">One of the signed attributes is used to determine which certificate is used to verify the signature, so this CaDES is not affected by the attack.<a href="#section-5.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rfc-5024-odette-file-transfer-protocol-2">
