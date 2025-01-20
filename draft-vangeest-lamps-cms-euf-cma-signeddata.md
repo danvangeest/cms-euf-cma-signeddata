@@ -259,9 +259,9 @@ Since SCEP seems to require the use of signedAttrs with the id-data eContentType
 
 {{Section 3.1 of ?RFC8572}} allows the use of the id-data eContentType, although it also defines more specific content types.  It does not say anything about signed attributes.
 
-## RFC 8551 S/MIME 4.0
+## S/MIME RFCs
 
-{{?RFC8551}} requires the use of the id-data eContentType.
+{{?RFC8551}}, {{?RFC5751}}, {{?RFC3851}}, and {{?RFC2633}} require the use of the id-data eContentType.
 
 {{Section 2.5 of ?RFC8551}} says:
 
@@ -286,10 +286,6 @@ So the use of signed attributes is not an absolute requirement.
 additional attributes whether signed or unsigned, authenticated or
 unauthenticated.
 
-## RFC 5751 S/MIME 3.2
-
-{{?RFC5751}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
-
 ## RFC 5655 IP Flow Information Export (IPFIX)
 
 {{?RFC5655}} is a file format that uses CMS for detached signatures. It says nothing about the use of signed attributes.
@@ -308,17 +304,9 @@ unauthenticated.
 
 {{?RFC5024}} uses the id-data eContentType and says nothing about signed attributes.
 
-## RFC 3851 S/MIME 3.1
-
-{{?RFC3851}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
-
 ## RFC 3126 Electronic Signature Formats for long term electronic signatures
 
 {{Section 6.1 of ?RFC3126}} requires the MessageDigest attribute, which is a signed attribute.
-
-## RFC 2633 S/MIME 3.0
-
-{{?RFC2633}} is an older version of {{?RFC8551}} with the same signed attributes requirements.
 
 
 # Security Considerations
