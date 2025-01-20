@@ -233,7 +233,7 @@ The RFCs in the following subsections use the id-data eContentType. This table s
 
 | RFC | Signed Attributes Usage |
 |-|-|
-| {{?RFC8994}} | Appears to require the used of signed attributes |
+| {{?RFC8994}} | Requires the used of signed attributes |
 | {{?RFC8572}} | Says nothing about signed attributes |
 | {{?RFC8551}} | RECOMMENDS signed attributes |
 | {{?RFC6257}} | Forbids signed attributes |
@@ -247,13 +247,13 @@ The RFCs in the following subsections use the id-data eContentType. This table s
 | {{?RFC2633}} | RECOMMENDS signed attributes |
 {: title="RFCs using id-data"}
 
-An RFC requiring or forbidding signed attributes does not mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.
+An RFC requiring or forbidding signed attributes does not necessarily mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.  If one of the signed attributes is necessary for the verifier to successfully verify the signature or to successfully process the CMS data then the attack will not apply.
 
 ## RFC 8894 Simple Certificate Enrolment Protocol
 
-Figure 6 in {{Section 3 of ?RFC8894}} specifies id-data as the eContentType, and shows the use of signedAttrs.  The document itself never refers to signed attributes, but instead to authenticated attributes and an authenticatedAttributes type.  Errata ID 8247 has been filed to clarify this.
+Figure 6 in {{Section 3 of ?RFC8894}} specifies id-data as the eContentType, and shows the use of signedAttrs.  The document itself never refers to signed attributes, but instead to authenticated attributes and an authenticatedAttributes type.  Errata ID 8247 clarifies that it should be "signed attributes" and "signedAttrs".
 
-Since SCEP seems to require the use of signedAttrs with the id-data eContentType, it is not affected by this attack.
+Since SCEP requires the use of signedAttrs with the id-data eContentType, and the recipient must process at least some of the signed attributes, it is not affected by the attack.
 
 ## RFC 8572 Secure Zero Touch Provisioning (SZTP)
 
@@ -299,6 +299,8 @@ unauthenticated.
 ## RFC 5126 CMS Advanced Electronic Signatures (CAdES)
 
 {{Section 4.3.1 of ?RFC5126}} specifies mandatory signed attributes.
+
+One of the signed attributes is used to determine which certificate is used to verify the signature, so this CaDES is not affected by the attack.
 
 ## RFC 5024 ODETTE File Transfer Protocol 2
 
