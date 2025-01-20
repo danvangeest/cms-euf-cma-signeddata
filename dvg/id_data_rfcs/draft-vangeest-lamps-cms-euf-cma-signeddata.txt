@@ -5,8 +5,8 @@
 Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Intended status: Standards Track                             F. Strenzke
-Expires: 14 July 2025                                             MTG AG
-                                                         10 January 2025
+Expires: 24 July 2025                                             MTG AG
+                                                         20 January 2025
 
 
      EUF-CMA for the Cryptographic Message Syntax (CMS) SignedData
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 July 2025.
+   This Internet-Draft will expire on 24 July 2025.
 
 Copyright Notice
 
@@ -90,17 +90,14 @@ Table of Contents
    5.  RFCs Using the id-data eContentType
      5.1.  RFC 8894 Simple Certificate Enrolment Protocol
      5.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
-     5.3.  RFC 8551 S/MIME 4.0
+     5.3.  S/MIME RFCs
      5.4.  RFC 6257 Bundle Security Protocol Specification
-     5.5.  RFC 5751 S/MIME 3.2
-     5.6.  RFC 5655 IP Flow Information Export (IPFIX)
-     5.7.  RFC 5636 Traceable Anonymous Certificate
-     5.8.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
-     5.9.  RFC 5024 ODETTE File Transfer Protocol 2
-     5.10. RFC 3851 S/MIME 3.1
-     5.11. RFC 3126 Electronic Signature Formats for long term
-            electronic signatures
-     5.12. RFC 2633 S/MIME 3.0
+     5.5.  RFC 5655 IP Flow Information Export (IPFIX)
+     5.6.  RFC 5636 Traceable Anonymous Certificate
+     5.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+     5.8.  RFC 5024 ODETTE File Transfer Protocol 2
+     5.9.  RFC 3126 Electronic Signature Formats for long term
+           electronic signatures
    6.  Security Considerations
    7.  IANA Considerations
    8.  References
@@ -416,9 +413,10 @@ Table of Contents
    although it also defines more specific content types.  It does not
    say anything about signed attributes.
 
-5.3.  RFC 8551 S/MIME 4.0
+5.3.  S/MIME RFCs
 
-   [RFC8551] requires the use of the id-data eContentType.
+   [RFC8551], [RFC5751], [RFC3851], and [RFC2633] require the use of the
+   id-data eContentType.
 
    Section 2.5 of [RFC8551] says:
 
@@ -443,46 +441,31 @@ Table of Contents
       additional attributes whether signed or unsigned, authenticated or
       unauthenticated.
 
-5.5.  RFC 5751 S/MIME 3.2
-
-   [RFC5751] is an older version of [RFC8551] with the same signed
-   attributes requirements.
-
-5.6.  RFC 5655 IP Flow Information Export (IPFIX)
+5.5.  RFC 5655 IP Flow Information Export (IPFIX)
 
    [RFC5655] is a file format that uses CMS for detached signatures.  It
    says nothing about the use of signed attributes.
 
-5.7.  RFC 5636 Traceable Anonymous Certificate
+5.6.  RFC 5636 Traceable Anonymous Certificate
 
    Appendix C.1.2 of [RFC5636] says:
 
       The signedAttr element MUST be omitted.
 
-5.8.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+5.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
 
    Section 4.3.1 of [RFC5126] specifies mandatory signed attributes.
 
-5.9.  RFC 5024 ODETTE File Transfer Protocol 2
+5.8.  RFC 5024 ODETTE File Transfer Protocol 2
 
    [RFC5024] uses the id-data eContentType and says nothing about signed
    attributes.
 
-5.10.  RFC 3851 S/MIME 3.1
-
-   [RFC3851] is an older version of [RFC8551] with the same signed
-   attributes requirements.
-
-5.11.  RFC 3126 Electronic Signature Formats for long term electronic
-       signatures
+5.9.  RFC 3126 Electronic Signature Formats for long term electronic
+      signatures
 
    Section 6.1 of [RFC3126] requires the MessageDigest attribute, which
    is a signed attribute.
-
-5.12.  RFC 2633 S/MIME 3.0
-
-   [RFC2633] is an older version of [RFC8551] with the same signed
-   attributes requirements.
 
 6.  Security Considerations
 
@@ -547,17 +530,17 @@ Table of Contents
               S, B., R, A., and D. Van Geest, "Use of the ML-DSA
               Signature Algorithm in the Cryptographic Message Syntax
               (CMS)", Work in Progress, Internet-Draft, draft-ietf-
-              lamps-cms-ml-dsa-01, 22 November 2024,
+              lamps-cms-ml-dsa-02, 17 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              cms-ml-dsa-01>.
+              cms-ml-dsa-02>.
 
    [I-D.ietf-lamps-cms-sphincs-plus]
               Housley, R., Fluhrer, S., Kampanakis, P., and B.
               Westerbaan, "Use of the SLH-DSA Signature Algorithm in the
               Cryptographic Message Syntax (CMS)", Work in Progress,
-              Internet-Draft, draft-ietf-lamps-cms-sphincs-plus-17, 30
-              November 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-lamps-cms-sphincs-plus-17>.
+              Internet-Draft, draft-ietf-lamps-cms-sphincs-plus-19, 13
+              January 2025, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-lamps-cms-sphincs-plus-19>.
 
    [I-D.ietf-lamps-pq-composite-sigs]
               Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
