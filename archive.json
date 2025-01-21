@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-19T01:22:17.370503+00:00",
+  "timestamp": "2025-01-21T01:16:38.033454+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -196,13 +196,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-10T15:22:11Z",
-      "updatedAt": "2025-01-13T07:48:59Z",
+      "updatedAt": "2025-01-20T13:59:48Z",
       "baseRepository": "danvangeest/cms-euf-cma-signeddata",
       "baseRefName": "main",
       "baseRefOid": "30e36657edaf7d74aff595077eeebe8a2da8b0de",
       "headRepository": "danvangeest/cms-euf-cma-signeddata",
       "headRefName": "dvg/id_data_rfcs",
-      "headRefOid": "8e0bec0c5842c50cd622d22390ca4db6a4afdf41",
+      "headRefOid": "3daf42c17abf31c34efa441c07bef10bc1497dc8",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
