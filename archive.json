@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-26T01:19:25.768806+00:00",
+  "timestamp": "2025-01-28T01:16:53.375006+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -196,7 +196,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-10T15:22:11Z",
-      "updatedAt": "2025-01-20T13:59:48Z",
+      "updatedAt": "2025-01-27T08:20:22Z",
       "baseRepository": "danvangeest/cms-euf-cma-signeddata",
       "baseRefName": "main",
       "baseRefOid": "30e36657edaf7d74aff595077eeebe8a2da8b0de",
@@ -249,6 +249,26 @@
           "createdAt": "2025-01-13T07:37:17Z",
           "updatedAt": "2025-01-13T07:37:17Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDONVsH1s6Zd-UD",
+          "commit": {
+            "abbreviatedOid": "3daf42c"
+          },
+          "author": "falko-strenzke",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-27T08:20:22Z",
+          "updatedAt": "2025-01-27T08:20:22Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "It's not 100% true that the attack does not apply in such cases: Even where the SA are required, the signer may erroneously omit them (not a very realistic assumption, though). If the signer signs an attacker-supplied message without SA, then the attacker can make sure that the signed message is an SA structure that contains the required attributes for successful verification (and a message digest attribute for a message of his choice).",
+              "createdAt": "2025-01-27T08:20:22Z",
+              "updatedAt": "2025-01-27T08:20:23Z"
+            }
+          ]
         }
       ]
     }
