@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T01:15:55.824548+00:00",
+  "timestamp": "2025-02-02T01:20:50.691611+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -196,7 +196,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-01-10T15:22:11Z",
-      "updatedAt": "2025-01-29T14:45:16Z",
+      "updatedAt": "2025-01-30T06:57:16Z",
       "baseRepository": "danvangeest/cms-euf-cma-signeddata",
       "baseRefName": "main",
       "baseRefOid": "30e36657edaf7d74aff595077eeebe8a2da8b0de",
@@ -287,6 +287,26 @@
               "body": "@falko-strenzke do you think we need some additional text here?",
               "createdAt": "2025-01-29T14:45:16Z",
               "updatedAt": "2025-01-29T14:45:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDONVsH1s6Z9lKp",
+          "commit": {
+            "abbreviatedOid": "3daf42c"
+          },
+          "author": "falko-strenzke",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-01-30T06:57:16Z",
+          "updatedAt": "2025-01-30T06:57:16Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nAn RFC requiring or forbidding signed attributes does not necessarily mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.  If one of the signed attributes is necessary for the verifier to successfully verify the signature or to successfully process the CMS data then the attack will not apply; at least not when assuming the signer is well-behaved and always signs with signed attributes present in accordance with the applicable specification.\r\n```",
+              "createdAt": "2025-01-30T06:57:16Z",
+              "updatedAt": "2025-01-30T06:57:16Z"
             }
           ]
         }
