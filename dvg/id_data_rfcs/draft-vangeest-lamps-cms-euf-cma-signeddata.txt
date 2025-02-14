@@ -5,8 +5,8 @@
 Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Intended status: Standards Track                             F. Strenzke
-Expires: 24 July 2025                                             MTG AG
-                                                         20 January 2025
+Expires: 18 August 2025                                           MTG AG
+                                                        14 February 2025
 
 
      EUF-CMA for the Cryptographic Message Syntax (CMS) SignedData
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 July 2025.
+   This Internet-Draft will expire on 18 August 2025.
 
 Copyright Notice
 
@@ -396,7 +396,10 @@ Table of Contents
    their CMS implementation may simply process the message whether or
    not signed attributes are present.  If one of the signed attributes
    is necessary for the verifier to successfully verify the signature or
-   to successfully process the CMS data then the attack will not apply.
+   to successfully process the CMS data then the attack will not apply;
+   at least not when assuming the signer is well-behaved and always
+   signs with signed attributes present in accordance with the
+   applicable specification.
 
 5.1.  RFC 8894 Simple Certificate Enrolment Protocol
 
