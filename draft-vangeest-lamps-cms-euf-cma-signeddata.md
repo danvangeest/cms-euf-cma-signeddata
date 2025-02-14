@@ -247,7 +247,7 @@ The RFCs in the following subsections use the id-data eContentType. This table s
 | {{?RFC2633}} | RECOMMENDS signed attributes |
 {: title="RFCs using id-data"}
 
-An RFC requiring or forbidding signed attributes does not necessarily mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.  If one of the signed attributes is necessary for the verifier to successfully verify the signature or to successfully process the CMS data then the attack will not apply.
+An RFC requiring or forbidding signed attributes does not necessarily mean that a verifier will enforce this requirement when verifying, their CMS implementation may simply process the message whether or not signed attributes are present.  If one of the signed attributes is necessary for the verifier to successfully verify the signature or to successfully process the CMS data then the attack will not apply; at least not when assuming the signer is well-behaved and always signs with signed attributes present in accordance with the applicable specification.
 
 ## RFC 8894 Simple Certificate Enrolment Protocol
 
