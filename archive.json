@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-13T01:18:46.326004+00:00",
+  "timestamp": "2025-02-16T01:24:39.076029+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -189,24 +189,26 @@
       "id": "PR_kwDONVsH1s6HWFcT",
       "title": "Add a section briefly exploring RFCs using the id-data eContentType",
       "url": "https://github.com/danvangeest/cms-euf-cma-signeddata/pull/6",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "danvangeest",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-10T15:22:11Z",
-      "updatedAt": "2025-01-30T06:57:16Z",
+      "updatedAt": "2025-02-14T13:33:54Z",
       "baseRepository": "danvangeest/cms-euf-cma-signeddata",
       "baseRefName": "main",
       "baseRefOid": "30e36657edaf7d74aff595077eeebe8a2da8b0de",
       "headRepository": "danvangeest/cms-euf-cma-signeddata",
       "headRefName": "dvg/id_data_rfcs",
-      "headRefOid": "3daf42c17abf31c34efa441c07bef10bc1497dc8",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b08a9260b074c5a92b1095b351cb93447fd808f0",
+      "closedAt": "2025-02-14T13:33:54Z",
+      "mergedAt": "2025-02-14T13:33:54Z",
+      "mergedBy": "danvangeest",
+      "mergeCommit": {
+        "oid": "6161f5b960c708474f15a60ab3c9205f85af8bce"
+      },
       "comments": [
         {
           "author": "falko-strenzke",
