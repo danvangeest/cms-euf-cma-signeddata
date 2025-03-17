@@ -12,13 +12,13 @@
 This results in a potential existential forgery vulnerability in CMS and protocols which use CMS.
 This document describes the vulnerability and lists a number of potential mitigations for LAMPS working group discussion. 
     " name="description">
-<meta content="xml2rfc 3.26.0" name="generator">
+<meta content="xml2rfc 3.28.0" name="generator">
 <meta content="Cryptographic Message Syntax" name="keyword">
 <meta content="CMS" name="keyword">
 <meta content="draft-vangeest-lamps-cms-euf-cma-signeddata-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.26.0
-    Python 3.12.8
+  xml2rfc 3.28.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -439,7 +439,7 @@ dl {
     margin-bottom: 0;
   }
 }
-dl > dt {
+dl:not(.dlNewline) > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
@@ -1048,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">EUF-CMA for CMS SignedData</td>
-<td class="right">February 2025</td>
+<td class="right">March 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Van Geest &amp; Strenzke</td>
-<td class="center">Expires 18 August 2025</td>
+<td class="center">Expires 18 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-vangeest-lamps-cms-euf-cma-signeddata-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-14" class="published">14 February 2025</time>
+<time datetime="2025-03-17" class="published">17 March 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-08-18">18 August 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-18">18 September 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ This document describes the vulnerability and lists a number of potential mitiga
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1194,6 +1194,9 @@ This document describes the vulnerability and lists a number of potential mitiga
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
                 <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-attack-detection-in-your-pr" class="internal xref">Attack Detection in Your Protocol</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-check-content-type-consiste" class="internal xref">Check Content Type Consistency</a></p>
 </li>
             </ul>
 </li>
@@ -1275,7 +1278,7 @@ This document describes the vulnerability and lists a number of potential mitiga
 An attacker can perform two different types of attacks:<a href="#section-1-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-5">
 <li id="section-1-5.1">
-          <p id="section-1-5.1.1">Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and remove the SignedAttributes, thereby crafting a new message M' that was never signed by the signer.  M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
+          <p id="section-1-5.1.1">Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and rearrange the structure such that the SignedAttributes field is absent and the original DER-encoded SignedAttributes appears as an encapsulated or detached content of type id-data, thereby crafting a new structure M' that was never explicitly signed by the signer.  M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.<a href="#section-1-5.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-5.2">
           <p id="section-1-5.2.1">Let the signer sign a message of the attacker's choice without SignedAttributes.
@@ -1469,7 +1472,7 @@ This list is validated by the verifier and used as the signature context string.
         <h3 id="name-attack-detection-in-cms">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-attack-detection-in-cms" class="section-name selfRef">Attack Detection in CMS</a>
         </h3>
-<p id="section-4.1-1">If SignedAttributes is not present, check if the signed message is a valid DER-encoded SignedAttributes structure and fail if it is.
+<p id="section-4.1-1">If eContentType is id-data and SignedAttributes is not present, check if the encapsulated or detached content is a valid DER-encoded SignedAttributes structure and fail if it is.
 The mandatory contentType and messageDigest attributes, with their respective OIDs, should give a low probability of a legitimate message being flagged.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">If an application protocol deliberately uses such a signed messages, verification would fail.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <p id="section-4.1-3">This mitigation does not address the inverse problem where a protocol doesn't used SignedAttributes but for some reason often sends messages which happen to be formatted like valid SignedAttributes encodings, with attacker-controlled bytes where the message digest attribute would be.<a href="#section-4.1-3" class="pilcrow">¶</a></p>
@@ -1480,7 +1483,7 @@ The mandatory contentType and messageDigest attributes, with their respective OI
         <h3 id="name-always-never-use-signedattr">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-always-never-use-signedattr" class="section-name selfRef">Always/Never use SignedAttributes in Your Protocol</a>
         </h3>
-<p id="section-4.2-1">Individually update each protocol which use CMS to always require or forbid signed attributes.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">Individually update each protocol which use CMS to always require or forbid signed attributes. In particular, if an eContentType other than id-data is used, <span><a href="https://rfc-editor.org/rfc/rfc5652#section-5.3" class="relref">Section 5.3</a> of [<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> requires that signed attributes are used.  During verification, ensure that you are receiving the expected (non-id-data) eContentType and that signed attribues are present.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="attack-detection-in-your-protocol">
@@ -1489,6 +1492,15 @@ The mandatory contentType and messageDigest attributes, with their respective OI
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-attack-detection-in-your-pr" class="section-name selfRef">Attack Detection in Your Protocol</a>
         </h3>
 <p id="section-4.3-1"><a href="#attack-detection" class="auto internal xref">Section 4.1</a> but specified in the protocol that uses CMS rather than CMS itself.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="check-content-type-consistency">
+<section id="section-4.4">
+        <h3 id="name-check-content-type-consiste">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-check-content-type-consiste" class="section-name selfRef">Check Content Type Consistency</a>
+        </h3>
+<p id="section-4.4-1">Check that the content type the EncapsulatedContentInfo value being verified is consistent with your application.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<p id="section-4.4-2">If the content type of the EncapsulatedContentInfo value being verified is not id-data and signed attributes are not present, verification <span class="bcp14">MUST</span> fail.<a href="#section-4.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1513,7 +1525,7 @@ The mandatory contentType and messageDigest attributes, with their respective OI
         <tbody>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">
-              <span>[<a href="#RFC8994" class="cite xref">RFC8994</a>]</span>
+              <span>[<a href="#RFC8894" class="cite xref">RFC8894</a>]</span>
 </td>
             <td class="text-left" rowspan="1" colspan="1">Requires the used of signed attributes</td>
           </tr>
@@ -1699,6 +1711,7 @@ unauthenticated.<a href="#section-5.4-2.1.1" class="pilcrow">¶</a></p>
       </h2>
 <p id="section-6-1">TODO Security<a href="#section-6-1" class="pilcrow">¶</a></p>
 <p id="section-6-2">The vulnerability is not present in systems where the use of SignedAttributes is mandatory, for example: SCEP, Certificate Transparency, RFC 4018 firmware update, German Smart Metering CMS data format.
+Any protocol that uses an eContentType other than id-data is required to use signed attributes.
 However, this security relies on a correct implementation of the verification routine that ensures the presence of SignedAttributes.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <p id="section-6-3">The vulnerability is also not present when the message is signed and then encrypted, as the attacker cannot learn the signature.<a href="#section-6-3" class="pilcrow">¶</a></p>
 <p id="section-6-4">Conceivably vulnerable systems (TODO: describe these better):<a href="#section-6-4" class="pilcrow">¶</a></p>
@@ -1779,7 +1792,7 @@ However, this security relies on a correct implementation of the verification ro
 <dd class="break"></dd>
 <dt id="I-D.ietf-lamps-pq-composite-sigs">[I-D.ietf-lamps-pq-composite-sigs]</dt>
         <dd>
-<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA For use in X.509 Public Key Infrastructure and CMS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-03</span>, <time datetime="2024-10-21" class="refDate">21 October 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-03">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Ounsworth, M.</span>, <span class="refAuthor">Gray, J.</span>, <span class="refAuthor">Pala, M.</span>, <span class="refAuthor">Klaußner, J.</span>, and <span class="refAuthor">S. Fluhrer</span>, <span class="refTitle">"Composite ML-DSA for use in X.509 Public Key Infrastructure and CMS"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lamps-pq-composite-sigs-04</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-04">https://datatracker.ietf.org/doc/html/draft-ietf-lamps-pq-composite-sigs-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="LAMPS121">[LAMPS121]</dt>
         <dd>
@@ -1840,10 +1853,6 @@ However, this security relies on a correct implementation of the verification ro
 <dt id="RFC8894">[RFC8894]</dt>
         <dd>
 <span class="refAuthor">Gutmann, P.</span>, <span class="refTitle">"Simple Certificate Enrolment Protocol"</span>, <span class="seriesInfo">RFC 8894</span>, <span class="seriesInfo">DOI 10.17487/RFC8894</span>, <time datetime="2020-09" class="refDate">September 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8894">https://www.rfc-editor.org/rfc/rfc8894</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8994">[RFC8994]</dt>
-        <dd>
-<span class="refAuthor">Eckert, T., Ed.</span>, <span class="refAuthor">Behringer, M., Ed.</span>, and <span class="refAuthor">S. Bjarnason</span>, <span class="refTitle">"An Autonomic Control Plane (ACP)"</span>, <span class="seriesInfo">RFC 8994</span>, <span class="seriesInfo">DOI 10.17487/RFC8994</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8994">https://www.rfc-editor.org/rfc/rfc8994</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="Str23">[Str23]</dt>
       <dd>

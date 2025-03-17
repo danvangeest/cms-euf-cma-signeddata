@@ -5,8 +5,8 @@
 Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Intended status: Standards Track                             F. Strenzke
-Expires: 18 August 2025                                           MTG AG
-                                                        14 February 2025
+Expires: 18 September 2025                                        MTG AG
+                                                           17 March 2025
 
 
      EUF-CMA for the Cryptographic Message Syntax (CMS) SignedData
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 August 2025.
+   This Internet-Draft will expire on 18 September 2025.
 
 Copyright Notice
 
@@ -87,6 +87,7 @@ Table of Contents
      4.1.  Attack Detection in CMS
      4.2.  Always/Never use SignedAttributes in Your Protocol
      4.3.  Attack Detection in Your Protocol
+     4.4.  Check Content Type Consistency
    5.  RFCs Using the id-data eContentType
      5.1.  RFC 8894 Simple Certificate Enrolment Protocol
      5.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
@@ -126,11 +127,14 @@ Table of Contents
    behaviour.  An attacker can perform two different types of attacks:
 
    1.  Take an arbitrary CMS signed message M which was originally
-       signed with SignedAttributes present and remove the
-       SignedAttributes, thereby crafting a new message M' that was
-       never signed by the signer.  M' has the DER-encoded
-       SignedAttributes of the original message as its content and
-       verifies correctly against the original signature of M.
+       signed with SignedAttributes present and rearrange the structure
+       such that the SignedAttributes field is absent and the original
+       DER-encoded SignedAttributes appears as an encapsulated or
+       detached content of type id-data, thereby crafting a new
+       structure M' that was never explicitly signed by the signer.  M'
+       has the DER-encoded SignedAttributes of the original message as
+       its content and verifies correctly against the original signature
+       of M.
 
    2.  Let the signer sign a message of the attacker's choice without
        SignedAttributes.  The attacker chooses this message to be a
@@ -331,11 +335,11 @@ Table of Contents
 
 4.1.  Attack Detection in CMS
 
-   If SignedAttributes is not present, check if the signed message is a
-   valid DER-encoded SignedAttributes structure and fail if it is.  The
-   mandatory contentType and messageDigest attributes, with their
-   respective OIDs, should give a low probability of a legitimate
-   message being flagged.
+   If eContentType is id-data and SignedAttributes is not present, check
+   if the encapsulated or detached content is a valid DER-encoded
+   SignedAttributes structure and fail if it is.  The mandatory
+   contentType and messageDigest attributes, with their respective OIDs,
+   should give a low probability of a legitimate message being flagged.
 
    If an application protocol deliberately uses such a signed messages,
    verification would fail.
@@ -349,12 +353,25 @@ Table of Contents
 4.2.  Always/Never use SignedAttributes in Your Protocol
 
    Individually update each protocol which use CMS to always require or
-   forbid signed attributes.
+   forbid signed attributes.  In particular, if an eContentType other
+   than id-data is used, Section 5.3 of [RFC5652] requires that signed
+   attributes are used.  During verification, ensure that you are
+   receiving the expected (non-id-data) eContentType and that signed
+   attribues are present.
 
 4.3.  Attack Detection in Your Protocol
 
    Section 4.1 but specified in the protocol that uses CMS rather than
    CMS itself.
+
+4.4.  Check Content Type Consistency
+
+   Check that the content type the EncapsulatedContentInfo value being
+   verified is consistent with your application.
+
+   If the content type of the EncapsulatedContentInfo value being
+   verified is not id-data and signed attributes are not present,
+   verification MUST fail.
 
 5.  RFCs Using the id-data eContentType
 
@@ -364,7 +381,7 @@ Table of Contents
           +===========+========================================+
           | RFC       | Signed Attributes Usage                |
           +===========+========================================+
-          | [RFC8994] | Requires the used of signed attributes |
+          | [RFC8894] | Requires the used of signed attributes |
           +-----------+----------------------------------------+
           | [RFC8572] | Says nothing about signed attributes   |
           +-----------+----------------------------------------+
@@ -484,9 +501,10 @@ Table of Contents
    The vulnerability is not present in systems where the use of
    SignedAttributes is mandatory, for example: SCEP, Certificate
    Transparency, RFC 4018 firmware update, German Smart Metering CMS
-   data format.  However, this security relies on a correct
-   implementation of the verification routine that ensures the presence
-   of SignedAttributes.
+   data format.  Any protocol that uses an eContentType other than id-
+   data is required to use signed attributes.  However, this security
+   relies on a correct implementation of the verification routine that
+   ensures the presence of SignedAttributes.
 
    The vulnerability is also not present when the message is signed and
    then encrypted, as the attacker cannot learn the signature.
@@ -554,11 +572,11 @@ Table of Contents
 
    [I-D.ietf-lamps-pq-composite-sigs]
               Ounsworth, M., Gray, J., Pala, M., Klaußner, J., and S.
-              Fluhrer, "Composite ML-DSA For use in X.509 Public Key
+              Fluhrer, "Composite ML-DSA for use in X.509 Public Key
               Infrastructure and CMS", Work in Progress, Internet-Draft,
-              draft-ietf-lamps-pq-composite-sigs-03, 21 October 2024,
+              draft-ietf-lamps-pq-composite-sigs-04, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-lamps-
-              pq-composite-sigs-03>.
+              pq-composite-sigs-04>.
 
    [LAMPS121] Strenzke, F., "EUF-CMA for CMS SignedData", 6 November
               2024, <https://datatracker.ietf.org/meeting/121/materials/
@@ -630,11 +648,6 @@ Table of Contents
    [RFC8894]  Gutmann, P., "Simple Certificate Enrolment Protocol",
               RFC 8894, DOI 10.17487/RFC8894, September 2020,
               <https://www.rfc-editor.org/rfc/rfc8894>.
-
-   [RFC8994]  Eckert, T., Ed., Behringer, M., Ed., and S. Bjarnason, "An
-              Autonomic Control Plane (ACP)", RFC 8994,
-              DOI 10.17487/RFC8994, May 2021,
-              <https://www.rfc-editor.org/rfc/rfc8994>.
 
    [Str23]    Strenzke, F., "ForgedAttributes: An Existential Forgery
               Vulnerability of CMS and PKCS#7 Signatures", 22 November
