@@ -77,7 +77,7 @@ CMS gives a signer two options when generating a signature on some content:
 The resulting signature does not commit to the presence of the SignedAttributes type, allowing an attacker to influence verification behaviour.
 An attacker can perform two different types of attacks:
 
-1. Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and remove the SignedAttributes, thereby crafting a new message M' that was never signed by the signer.  M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.
+1. Take an arbitrary CMS signed message M which was originally signed with SignedAttributes present and rearrange the structure such that the SignedAttributes field is absent and the original DER-encoded SignedAttributes appears as an encapsulated or detached content of type id-data, thereby crafting a new structure M' that was never explicitly signed by the signer.  M' has the DER-encoded SignedAttributes of the original message as its content and verifies correctly against the original signature of M.
 2. Let the signer sign a message of the attacker's choice without SignedAttributes.
    The attacker chooses this message to be a valid DER-encoding of a SignedAttributes object.
    He can then add this encoded SignedAttributes object to the signed message and change the signed message to the one that was used to create the messageDigest attribute within the SignedAttributes.
@@ -212,7 +212,7 @@ The following mitigations might not be good ideas but are included just in case 
 
 ## Attack Detection in CMS {#attack-detection}
 
-If SignedAttributes is not present, check if the signed message is a valid DER-encoded SignedAttributes structure and fail if it is.
+If eContentType is id-data and SignedAttributes is not present, check if the encapsulated or detached content is a valid DER-encoded SignedAttributes structure and fail if it is.
 The mandatory contentType and messageDigest attributes, with their respective OIDs, should give a low probability of a legitimate message being flagged.
 
 If an application protocol deliberately uses such a signed messages, verification would fail.
@@ -221,11 +221,17 @@ This mitigation does not address the inverse problem where a protocol doesn't us
 
 ## Always/Never use SignedAttributes in Your Protocol
 
-Individually update each protocol which use CMS to always require or forbid signed attributes.
+Individually update each protocol which use CMS to always require or forbid signed attributes. In particular, if an eContentType other than id-data is used, {{Section 5.3 of RFC5652}} requires that signed attributes are used.  During verification, ensure that you are receiving the expected (non-id-data) eContentType and that signed attribues are present.
 
 ## Attack Detection in Your Protocol
 
 {{attack-detection}} but specified in the protocol that uses CMS rather than CMS itself.
+
+## Check Content Type Consistency
+
+Check that the content type the EncapsulatedContentInfo value being verified is consistent with your application.
+
+If the content type of the EncapsulatedContentInfo value being verified is not id-data and signed attributes are not present, verification MUST fail.
 
 # RFCs Using the id-data eContentType
 
@@ -233,7 +239,7 @@ The RFCs in the following subsections use the id-data eContentType. This table s
 
 | RFC | Signed Attributes Usage |
 |-|-|
-| {{?RFC8994}} | Requires the used of signed attributes |
+| {{?RFC8894}} | Requires the used of signed attributes |
 | {{?RFC8572}} | Says nothing about signed attributes |
 | {{?RFC8551}} | RECOMMENDS signed attributes |
 | {{?RFC6257}} | Forbids signed attributes |
@@ -316,6 +322,7 @@ One of the signed attributes is used to determine which certificate is used to v
 TODO Security
 
 The vulnerability is not present in systems where the use of SignedAttributes is mandatory, for example: SCEP, Certificate Transparency, RFC 4018 firmware update, German Smart Metering CMS data format.
+Any protocol that uses an eContentType other than id-data is required to use signed attributes.
 However, this security relies on a correct implementation of the verification routine that ensures the presence of SignedAttributes.
 
 The vulnerability is also not present when the message is signed and then encrypted, as the attacker cannot learn the signature.
