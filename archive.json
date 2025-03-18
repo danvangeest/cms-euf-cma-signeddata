@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-16T01:35:19.153981+00:00",
+  "timestamp": "2025-03-18T01:23:10.499980+00:00",
   "repo": "danvangeest/cms-euf-cma-signeddata",
   "labels": [
     {
@@ -313,6 +313,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDONVsH1s6O8l__",
+      "title": "Address Carl Wallace's comments",
+      "url": "https://github.com/danvangeest/cms-euf-cma-signeddata/pull/7",
+      "state": "OPEN",
+      "author": "danvangeest",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #3, #4, #5",
+      "createdAt": "2025-03-17T15:15:36Z",
+      "updatedAt": "2025-03-17T15:16:49Z",
+      "baseRepository": "danvangeest/cms-euf-cma-signeddata",
+      "baseRefName": "main",
+      "baseRefOid": "6161f5b960c708474f15a60ab3c9205f85af8bce",
+      "headRepository": "danvangeest/cms-euf-cma-signeddata",
+      "headRefName": "dvg/carls_comments",
+      "headRefOid": "73a5cf9ad40d123ee42c69afbaef55c556cca727",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
