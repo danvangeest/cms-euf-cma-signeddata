@@ -199,18 +199,6 @@ The use of signed attributes in CMS signatures effectively reverts any signature
 
 It should be noted that by employing signed attributes in CMS signatures, the modern signature schemes lose this security property.
 
-# ASN.1 Module
-
-~~~ asn.1
-
-<CODE STARTS>
-
-{::include MimeData-2026.asn}
-
-<CODE ENDS>
-
-~~~
-
 
 # IANA Considerations
 
@@ -234,6 +222,18 @@ In the "CMS Inner Content Types" registry within "Media Type Sub-Parameter Regis
 
 
 --- back
+
+# ASN.1 Module
+
+~~~ asn.1
+
+<CODE STARTS>
+
+{::include MimeData-2026.asn}
+
+<CODE ENDS>
+
+~~~
 
 # RFCs Using the id-data EncapsulatedContentInfo Content Type
 
