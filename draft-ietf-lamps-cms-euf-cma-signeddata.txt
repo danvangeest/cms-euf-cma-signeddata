@@ -5,8 +5,8 @@
 Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Intended status: Best Current Practice                       F. Strenzke
-Expires: 13 September 2026                                        MTG AG
-                                                           12 March 2026
+Expires: 14 February 2027                                         MTG AG
+                                                          13 August 2026
 
 
          Best Practices for Signed Attributes in CMS SignedData
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 September 2026.
+   This Internet-Draft will expire on 14 February 2027.
 
 Copyright Notice
 
@@ -86,22 +86,22 @@ Table of Contents
      6.1.  On the Applicability of the Vulnerability
      6.2.  Degradation of Security Guarantees Through the Use of
            Signed Attributes
-   7.  ASN.1 Module
-   8.  IANA Considerations
-   9.  References
-     9.1.  Normative References
-     9.2.  Informative References
-   Appendix A.  RFCs Using the id-data EncapsulatedContentInfo Content
+   7.  IANA Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
+   Appendix A.  ASN.1 Module
+   Appendix B.  RFCs Using the id-data EncapsulatedContentInfo Content
            Type
-     A.1.  RFC 8894 Simple Certificate Enrolment Protocol
-     A.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
-     A.3.  S/MIME RFCs
-     A.4.  RFC 6257 Bundle Security Protocol Specification
-     A.5.  RFC 5655 IP Flow Information Export (IPFIX)
-     A.6.  RFC 5636 Traceable Anonymous Certificate
-     A.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
-     A.8.  RFC 5024 ODETTE File Transfer Protocol 2
-     A.9.  RFC 3126 Electronic Signature Formats for long term
+     B.1.  RFC 8894 Simple Certificate Enrolment Protocol
+     B.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
+     B.3.  S/MIME RFCs
+     B.4.  RFC 6257 Bundle Security Protocol Specification
+     B.5.  RFC 5655 IP Flow Information Export (IPFIX)
+     B.6.  RFC 5636 Traceable Anonymous Certificate
+     B.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+     B.8.  RFC 5024 ODETTE File Transfer Protocol 2
+     B.9.  RFC 3126 Electronic Signature Formats for long term
            electronic signatures
    Acknowledgments
    Authors' Addresses
@@ -371,33 +371,7 @@ Table of Contents
    It should be noted that by employing signed attributes in CMS
    signatures, the modern signature schemes lose this security property.
 
-7.  ASN.1 Module
-
-   <CODE STARTS>
-
-   MimeData-2026 { iso(1) member-body(2) usa(840)
-           rsadsi(113549) pkcs(1) pkcs9(9) smime(16) modules(0)
-           id-mod-mime-data-2026(TBD1) }
-   DEFINITIONS EXPLICIT TAGS ::= BEGIN
-
-   IMPORTS
-       CONTENT-TYPE
-       FROM  CryptographicMessageSyntax-2010
-         { iso(1) member-body(2) us(840) rsadsi(113549)
-            pkcs(1) pkcs-9(9) smime(16) modules(0) id-mod-cms-2009(58) }
-       ;
-
-       id-ct-mimeData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
-           us(840) rsadsi(113549) pkcs(1) pkcs9(9) smime(16) ct(1)
-           TBD2 }
-
-       ct-mimeData CONTENT-TYPE ::= { IDENTIFIED BY id-ct-mimeData }
-
-   END
-
-   <CODE ENDS>
-
-8.  IANA Considerations
+7.  IANA Considerations
 
    In the "SMI Security for S/MIME Module Identifier"
    (1.2.840.113549.1.9.16.0) registry within the "Structure of
@@ -437,9 +411,9 @@ Table of Contents
 
                                   Table 3
 
-9.  References
+8.  References
 
-9.1.  Normative References
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -454,7 +428,7 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-9.2.  Informative References
+8.2.  Informative References
 
    [FIPS205]  "Stateless hash-based digital signature standard",
               National Institute of Standards and Technology (U.S.),
@@ -535,7 +509,33 @@ Table of Contents
               Vulnerability of CMS Signatures", 22 November 2023,
               <https://eprint.iacr.org/2023/1801>.
 
-Appendix A.  RFCs Using the id-data EncapsulatedContentInfo Content Type
+Appendix A.  ASN.1 Module
+
+   <CODE STARTS>
+
+   MimeData-2026 { iso(1) member-body(2) usa(840)
+           rsadsi(113549) pkcs(1) pkcs9(9) smime(16) modules(0)
+           id-mod-mime-data-2026(TBD1) }
+   DEFINITIONS EXPLICIT TAGS ::= BEGIN
+
+   IMPORTS
+       CONTENT-TYPE
+       FROM  CryptographicMessageSyntax-2010
+         { iso(1) member-body(2) us(840) rsadsi(113549)
+            pkcs(1) pkcs-9(9) smime(16) modules(0) id-mod-cms-2009(58) }
+       ;
+
+       id-ct-mimeData OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+           us(840) rsadsi(113549) pkcs(1) pkcs9(9) smime(16) ct(1)
+           TBD2 }
+
+       ct-mimeData CONTENT-TYPE ::= { IDENTIFIED BY id-ct-mimeData }
+
+   END
+
+   <CODE ENDS>
+
+Appendix B.  RFCs Using the id-data EncapsulatedContentInfo Content Type
 
    This appendix lists RFCs which use the id-data content type in
    EncapsulatedContentInfo.  It is a best-effort list by the authors at
@@ -584,7 +584,7 @@ Appendix A.  RFCs Using the id-data EncapsulatedContentInfo Content Type
    always signs with signed attributes present in accordance with the
    applicable specification.
 
-A.1.  RFC 8894 Simple Certificate Enrolment Protocol
+B.1.  RFC 8894 Simple Certificate Enrolment Protocol
 
    Figure 6 in Section 3 of [RFC8894] specifies id-data as the
    EncapsulatedContentInfo content type, and shows the use of
@@ -598,13 +598,13 @@ A.1.  RFC 8894 Simple Certificate Enrolment Protocol
    at least some of the signed attributes, it is not affected by the
    vulnerability.
 
-A.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
+B.2.  RFC 8572 Secure Zero Touch Provisioning (SZTP)
 
    Section 3.1 of [RFC8572] allows the use of the id-data content type,
    although it also defines more specific content types.  It does not
    say anything about signed attributes.
 
-A.3.  S/MIME RFCs
+B.3.  S/MIME RFCs
 
    [RFC8551], [RFC5751], [RFC3851], and [RFC2633] require the use of the
    id-data EncapsulatedContentInfo content type.
@@ -624,7 +624,7 @@ A.3.  S/MIME RFCs
 
    So the use of signed attributes is not an absolute requirement.
 
-A.4.  RFC 6257 Bundle Security Protocol Specification
+B.4.  RFC 6257 Bundle Security Protocol Specification
 
    Section 4 of [RFC6257] says:
 
@@ -635,12 +635,12 @@ A.4.  RFC 6257 Bundle Security Protocol Specification
    It does not specify what the behaviour should be if signed attributes
    are found by the receiver.
 
-A.5.  RFC 5655 IP Flow Information Export (IPFIX)
+B.5.  RFC 5655 IP Flow Information Export (IPFIX)
 
    [RFC5655] is a file format that uses CMS for detached signatures.  It
    says nothing about the use of signed attributes.
 
-A.6.  RFC 5636 Traceable Anonymous Certificate
+B.6.  RFC 5636 Traceable Anonymous Certificate
 
    Appendix C.1.2 of [RFC5636] says:
 
@@ -649,7 +649,7 @@ A.6.  RFC 5636 Traceable Anonymous Certificate
    It does not specify what the behaviour should be if signed attributes
    are found by the receiver.
 
-A.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
+B.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
 
    Section 4.3.1 of [RFC5126] specifies mandatory signed attributes.
 
@@ -657,12 +657,12 @@ A.7.  RFC 5126 CMS Advanced Electronic Signatures (CAdES)
    is used to verify the signature, so CaDES is not affected by the
    vulnerability.
 
-A.8.  RFC 5024 ODETTE File Transfer Protocol 2
+B.8.  RFC 5024 ODETTE File Transfer Protocol 2
 
    [RFC5024] uses the id-data EncapsulatedContentInfo content type and
    says nothing about signed attributes.
 
-A.9.  RFC 3126 Electronic Signature Formats for long term electronic
+B.9.  RFC 3126 Electronic Signature Formats for long term electronic
       signatures
 
    Section 6.1 of [RFC3126] requires the MessageDigest attribute, which
