@@ -6,7 +6,7 @@ Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Updates: [5652] (if approved)                                F. Strenzke
 Intended status: Best Current Practice                            MTG AG
-Expires: 14 February 2027                                 13 August 2026
+Expires: 11 March 2027                                  7 September 2026
 
 
          Best Practices for Signed Attributes in CMS SignedData
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 February 2027.
+   This Internet-Draft will expire on 11 March 2027.
 
 Copyright Notice
 
@@ -270,12 +270,12 @@ Table of Contents
 
    The entity verifying a CMS SignedData for a specific protocol SHOULD
    (MUST for new uses of SignedData) verify that the
-   EncapsulatedContentInfo content type matches the value that protocol
-   expects, and SHOULD (MUST for new uses of SignedData) fail processing
-   if it does not.  A general-purpose CMS implementation that lacks
-   protocol-specific context MUST expose the received content type to
-   its caller, so that this check can be performed at the layer that has
-   that context.
+   EncapsulatedContentInfo content type matches the value that the
+   protocol expects, and SHOULD (MUST for new uses of SignedData) fail
+   processing if it does not.  A general-purpose CMS implementation that
+   lacks protocol-specific enforcement of the above defined checks MUST
+   expose the received content type to the application layer, so that
+   the checks can be performed at by the application.
 
    As specified in Section 5.3 of [RFC5652], a SignerInfo signedAttrs
    field MUST be present if the content type of the
