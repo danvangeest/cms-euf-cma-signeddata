@@ -6,7 +6,7 @@ Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Updates: [5652] (if approved)                                F. Strenzke
 Intended status: Best Current Practice                            MTG AG
-Expires: 11 March 2027                                  7 September 2026
+Expires: 13 March 2027                                  9 September 2026
 
 
          Best Practices for Signed Attributes in CMS SignedData
@@ -19,7 +19,8 @@ Abstract
    or not.  This results in a potential existential forgery
    vulnerability in CMS and protocols which use CMS.  This document
    describes the vulnerability and lists mitigations and best practices
-   to avoid it.
+   to avoid it.  This document updates [RFC5652] by prohibiting the use
+   of the id-data content type for new uses of the CMS SignedData type.
 
 About This Document
 
@@ -55,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 March 2027.
+   This Internet-Draft will expire on 13 March 2027.
 
 Copyright Notice
 
@@ -176,11 +177,10 @@ Table of Contents
    and mitigations that can also be applied to those protocols or
    systems that continue to use the content type id-data.
 
-   This document updates [RFC5652] by prohibiting the use of the id-data
-   content type for new uses of SignedData.  This restriction does not
-   retroactively affect the conformance of already-deployed
-   implementations, which are instead addressed via the migration
-   guidance in Section 4.2.
+   This document's prohibition of the use of the id-data content type
+   for new uses of SignedData does not retroactively affect the
+   conformance of already-deployed implementations, which are instead
+   addressed via the migration guidance in Section 4.2.
 
 2.  Conventions and Definitions
 
@@ -242,7 +242,14 @@ Table of Contents
    protocols that do not deprecate the use of id-data should provide a
    rationale for not doing so, so that reviewers can assess whether the
    trade-off against the risk described in Section 1 was adequately
-   considered.
+   considered.  For example, if new backwards-compatible extensions are
+   added to a protocol it might not be appropriate to move to a new
+   identifier at that time because doing so will result in a backwards-
+   compatibility breaking change and the extensions will be unlikely to
+   be deployed.  Other the other hand, if a protocol has a major version
+   update or otherwise backwards-compatibility breaking change it would
+   be appropriate to deprecate id-data in favour of a different
+   identifier at the same time.
 
    When an updated protocol specification uses the id-data
    EncapsulatedContentInfo content type within SignedData, it SHOULD
