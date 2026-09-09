@@ -95,7 +95,7 @@ informative:
 The Cryptographic Message Syntax (CMS) has different signature verification behaviour based on whether signed attributes are present or not.
 This results in a potential existential forgery vulnerability in CMS and protocols which use CMS.
 This document describes the vulnerability and lists mitigations and best practices to avoid it.
-
+This document updates {{RFC5652}} by prohibiting the use of the id-data content type for new uses of the CMS SignedData type.
 
 --- middle
 
@@ -131,7 +131,7 @@ The limited flexibility of either the signed or the forged message in either att
 As a mitigation, this document defines the new mimeData content type to be used in new uses of the CMS SignedData type when the encapsulated content is MIME encoded and thus avoid the use of the id-data content type.
 This document further describes best practices and mitigations that can also be applied to those protocols or systems that continue to use the content type id-data.
 
-This document updates {{RFC5652}} by prohibiting the use of the id-data content type for new uses of SignedData. This restriction does not retroactively affect the conformance of already-deployed implementations, which are instead addressed via the migration guidance in {{sec-existing}}.
+This document's prohibition of the use of the id-data content type for new uses of SignedData does not retroactively affect the conformance of already-deployed implementations, which are instead addressed via the migration guidance in {{sec-existing}}.
 
 # Conventions and Definitions {#sec-definitions}
 
@@ -167,6 +167,7 @@ If a new content type is defined, it might be appropriate to register it in the 
 ## Existing Uses of id-data in CMS SignedData {#sec-existing}
 
 When a protocol which uses the id-data EncapsulatedContentInfo content type within SignedData is updated, it SHOULD deprecate the use of id-data and use a different (new or existing) identifier. A partial list of such identifiers is found in the "CMS Inner Content Types" IANA subregistry within the "Media Type Sub-Parameter Registries" registry group. If the existing content is MIME encoded, the mimeData content type SHOULD be used, though there may be reasons to use other identifiers as mentioned in {{sec-new}}. Updated protocols that do not deprecate the use of id-data should provide a rationale for not doing so, so that reviewers can assess whether the trade-off against the risk described in {{intro}} was adequately considered.
+For example, if new backwards-compatible extensions are added to a protocol it might not be appropriate to move to a new identifier at that time because doing so will result in a backwards-compatibility breaking change and the extensions will be unlikely to be deployed.  Other the other hand, if a protocol has a major version update or otherwise backwards-compatibility breaking change it would be appropriate to deprecate id-data in favour of a different identifier at the same time.
 
 When an updated protocol specification uses the id-data EncapsulatedContentInfo content type within SignedData, it SHOULD specify that the signedAttrs field is either always required or always forbidden.  If a protocol makes such a requirement, a recipient implementing the specification MUST check whether the signedAttrs field is present or absent as specified by the protocol, and fail processing if the appropriate condition is not met.
 
