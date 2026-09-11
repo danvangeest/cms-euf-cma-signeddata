@@ -6,7 +6,7 @@ Limited Additional Mechanisms for PKIX and SMIME            D. Van Geest
 Internet-Draft                                       CryptoNext Security
 Updates: [5652] (if approved)                                F. Strenzke
 Intended status: Best Current Practice                            MTG AG
-Expires: 14 March 2027                                 10 September 2026
+Expires: 15 March 2027                                 11 September 2026
 
 
          Best Practices for Signed Attributes in CMS SignedData
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 March 2027.
+   This Internet-Draft will expire on 15 March 2027.
 
 Copyright Notice
 
@@ -87,6 +87,8 @@ Table of Contents
      5.2.  Sender Detection
    6.  Security Considerations
      6.1.  On the Applicability of the Vulnerability
+       6.1.1.  General Considerations of Applicability
+       6.1.2.  Cross-Protocol and Cross-Protocol-Version Attacks
      6.2.  Degradation of Security Guarantees Through the Use of
            Signed Attributes
    7.  IANA Considerations
@@ -211,11 +213,11 @@ Table of Contents
    The mimeData content type is intended as a replacement for the data
    content type (id-data object identifier) in new uses of the CMS
    SignedData type where the content is MIME encoded.  Like the data
-   content type, the mimeData content type is intended to refer to
-   arbitrary octet strings, such as ASCII text files; the interpretation
-   is left to the application.  Such strings need not have any internal
-   structure (although they could have their own ASN.1 definition or
-   other structure).
+   content type, the mimeData content type is encoded as an octet
+   string.  Unlike the data content type, the octet string MUST contain
+   a MIME entity as defined in [RFC2045], i.e., MIME header fields
+   followed by the body.  The interpretation of the MIME entity is
+   governed by its MIME headers.
 
 4.  Best Practices
 
@@ -372,6 +374,8 @@ Table of Contents
 
 6.1.  On the Applicability of the Vulnerability
 
+6.1.1.  General Considerations of Applicability
+
    The vulnerability is not present in systems where the use of
    signedAttrs is mandatory, as long as recipients enforce the use of
    signedAttrs.  Some examples where the use of signedAttrs is mandatory
@@ -448,26 +452,36 @@ Table of Contents
    Section 5.2 describes just one verification step that can be
    performed, specific to the vulnerability described in Section 1.
 
-   The claim in Section 6.1 that the vulnerability is not present when
-   signedAttrs is mandatory and enforced holds only if the signing key
-   is not also used to sign id-data content without signedAttrs in some
-   other context.  A signer who can be induced to sign attacker-chosen
-   id-data content without signedAttrs (see the second attack described
-   in Section 1) becomes a forgery oracle for any other protocol or
-   content type that relies on the same key pair and mandates the
-   presence of signedAttrs.
+6.1.2.  Cross-Protocol and Cross-Protocol-Version Attacks
+
+   The following explains how the use of the same signing key in a
+   protocol that adheres to this specification and at the same time in a
+   different protocol or protocol version can still lead to
+   vulnerabilities.
+
+   One observation is that the claim made in Section 6.1.1 that the
+   vulnerability is not present when signedAttrs is mandatory and
+   enforced holds only if the signing key is not also used to sign id-
+   data content without signedAttrs in some other context.  A signer who
+   can be induced to sign attacker-chosen id-data content without
+   signedAttrs (see the second attack described in Section 1) becomes a
+   forgery oracle for any other protocol or content type that relies on
+   the same key pair and mandates the presence of signedAttrs.
 
    This holds even for a protocol designed correctly per Section 4.1 or
    Section 4.2.  Mandating and enforcing signedAttrs within one protocol
    gives no protection if the same signing key is used without such
    enforcement in some unrelated context, e.g. an implementation that
    reuses an existing signing certificate to sign under a new protocol.
-   The risk also arises when an existing protocol is updated to mandate
-   signedAttrs (Section 4.2).  The same key may remain exposed to both
-   the old and new behaviour, e.g. an implementation must support both
-   during a transition period, or a user signs with the same key pair
-   from multiple independent applications (e.g. separate mobile and
-   desktop clients) that adopt the new behaviour at different times.
+   Vulnerabilities arising in such scenarios would classify as
+   vulnerabilities to cross-protocol attacks.  The risk also arises when
+   an existing protocol is updated to mandate signedAttrs (Section 4.2).
+   The same key may remain exposed to both the old and new behaviour,
+   e.g. an implementation must support both during a transition period,
+   or a user signs with the same key pair from multiple independent
+   applications (e.g. separate mobile and desktop clients) that adopt
+   the new behaviour at different times.  This scenario falls into the
+   category of cross-protocol-version attacks.
 
 6.2.  Degradation of Security Guarantees Through the Use of Signed
       Attributes
@@ -529,6 +543,11 @@ Table of Contents
 8.  References
 
 8.1.  Normative References
+
+   [RFC2045]  Freed, N. and N. Borenstein, "Multipurpose Internet Mail
+              Extensions (MIME) Part One: Format of Internet Message
+              Bodies", RFC 2045, DOI 10.17487/RFC2045, November 1996,
+              <https://www.rfc-editor.org/rfc/rfc2045>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
