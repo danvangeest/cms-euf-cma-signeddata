@@ -152,8 +152,10 @@ The following object identifier identifies the mimeData content type:
 ~~~
 
 The mimeData content type is intended as a replacement for the data content type (id-data object identifier) in new uses of the CMS SignedData type where the content is MIME encoded.
-Like the data content type, the mimeData content type is intended to refer to arbitrary octet strings, such as ASCII text files; the interpretation is left to the application.
-Such strings need not have any internal structure (although they could have their own ASN.1 definition or other structure).
+ Like the data content type, the mimeData content type is encoded as an octet
+ string. Unlike the data content type, the octet string MUST contain a MIME
+ entity as defined in {{!RFC2045}}, i.e., MIME header fields followed by the
+ body. The interpretation of the MIME entity is governed by its MIME headers.
 
 # Best Practices
 
@@ -228,6 +230,8 @@ Note that also in this case, a malicious party could intentionally present messa
 
 ## On the Applicability of the Vulnerability {#sec-applicability}
 
+### General Considerations of Applicability {#sec-general-applicability}
+
 The vulnerability is not present in systems where the use of signedAttrs is mandatory, as long as recipients enforce the use of signedAttrs. Some examples where the use of signedAttrs is mandatory are SCEP {{Section 3.2.1 of ?RFC8894}}, Certificate Transparency precertificates {{Section 3.2 of ?RFC9162}}, firmware update {{Section 2.1.2.1 of ?RFC4108}}, and the German Smart Metering CMS data format {{BSI-TR-03109-1}}.
 Any protocol that uses an EncapsulatedContentInfo content type other than id-data is required to use signed attributes.
 However, this security relies on a correct implementation of the verification routine that ensures the correct content type and presence of signedAttrs.
@@ -257,13 +261,19 @@ Conceivably vulnerable systems:
 
 Further note that it is generally not good security behaviour to sign data received from a third party without first verifying that data.  {{sender-detection}} describes just one verification step that can be performed, specific to the vulnerability described in {{intro}}.
 
-The claim in {{sec-applicability}} that the vulnerability is not present when signedAttrs is mandatory and enforced holds only if the signing key is not also used to sign id-data content without signedAttrs in some other context.
+### Cross-Protocol and Cross-Protocol-Version Attacks
+
+The following explains how the use of the same signing key in a protocol that adheres to this specification and at the same time in a different protocol or protocol version can still lead to vulnerabilities.
+
+One observation is that the claim made in {{sec-general-applicability}} that the vulnerability is not present when signedAttrs is mandatory and enforced holds only if the signing key is not also used to sign id-data content without signedAttrs in some other context.
 A signer who can be induced to sign attacker-chosen id-data content without signedAttrs (see the second attack described in {{intro}}) becomes a forgery oracle for any other protocol or content type that relies on the same key pair and mandates the presence of signedAttrs.
 
 This holds even for a protocol designed correctly per {{sec-new}} or {{sec-existing}}.
 Mandating and enforcing signedAttrs within one protocol gives no protection if the same signing key is used without such enforcement in some unrelated context, e.g. an implementation that reuses an existing signing certificate to sign under a new protocol.
+Vulnerabilities arising in such scenarios would classify as vulnerabilities to cross-protocol attacks.
 The risk also arises when an existing protocol is updated to mandate signedAttrs ({{sec-existing}}).
 The same key may remain exposed to both the old and new behaviour, e.g. an implementation must support both during a transition period, or a user signs with the same key pair from multiple independent applications (e.g. separate mobile and desktop clients) that adopt the new behaviour at different times.
+This scenario falls into the category of cross-protocol-version attacks.
 
 ## Degradation of Security Guarantees Through the Use of Signed Attributes
 
